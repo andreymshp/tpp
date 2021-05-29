@@ -1,0 +1,36 @@
+{% extends 'base.html' %}
+
+{% block tittle %}Привет{% endblock %}
+
+{% block content %}
+    <style>
+        body {
+            backdrop-filter: blur(5px);
+            background: url("https://www.intex-press.by/wp-content/uploads/2019/03/aaaaaaaaaaaaaa.jpg") no-repeat fixed;
+            background-size: cover;
+        }
+
+        h5 {
+            height: 1500px;
+        }
+
+        .btn-then {
+            position: relative;
+            bottom: 1300px;
+            margin: auto;
+        }
+    </style>
+    <h5 class="white-text">Привет! Мы - сервис, позволяющий удобно взаимодействовать системным администраторам и
+        пользователям
+        по вопросам технической поддержки</h5>
+    {% if not is_auth %}
+        {#        <p>Если тебе не выдал логин и пароль твой руководитель - напиши ему</p>#}
+        <a href="{% url "requ:login" %}" class="waves-effect waves-light btn btn-then">
+            <i class="material-icons left">login</i>
+            Войти</a>
+    {% else %}
+        <a href="{% url "requ:back" %}" class="waves-effect waves-light btn btn-then">
+            <i class="material-icons left">list</i>
+            К заявкам</a>
+    {% endif %}
+{% endblock %}

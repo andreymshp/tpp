@@ -1,0 +1,72 @@
+{% extends 'base.html' %}
+
+{% block tittle %}Заявка{% endblock %}
+
+{% block content %}
+    <h4 class="center-align">Заявка</h4>
+    <div class="row center-aligned">
+        <table class="striped">
+            <tr>
+                <td>Заявитель</td>
+                <td>{{ req.author }}</td>
+            </tr>
+            <tr>
+                <td>Проблема</td>
+                <td>{{ req.text }}</td>
+            </tr>
+            {% if req.is_solved %}
+                <tr>
+                    <td>Проблема</td>
+                    <td><i class="material-icons">done</i>Решена</td>
+                </tr>
+                {% if req.solver %}
+                    <tr>
+                        <td>Решил</td>
+                        <td>{{ req.solver }}</td>
+                    </tr>
+                {% endif %}
+            {% else %}
+                <tr>
+                    <td>Проблема</td>
+                    <td><i class="material-icons">close</i>Не решена</td>
+                </tr>
+            {% endif %}
+            <tr>
+                <td><i class="material-icons">access_time</i></td>
+                <td>{{ req.pub_date }}</td>
+            </tr>
+        </table>
+    </div>
+    {% if req.is_solved %}
+        <form action="{% url 'requ:unsolved' req.id %}">
+            <button type="submit" class="waves-effect waves-light btn">
+                <i class="material-icons left">disabled_by_default</i>Не решено
+            </button>
+        </form>
+    {% else %}
+        <form action="{% url 'requ:solved' req.id %}">
+            <button type="submit" class="waves-effect waves-light btn">
+                <i class="material-icons left">check</i>Решено
+            </button>
+        </form>
+    {% endif %}
+    <h4 class="center-align">Комментарии</h4>
+    <table>
+        {% for i in comments %}
+            <tr>
+                <td><i class="material-icons">person</i>{{ i.author }}</td>
+                <td>{{ i.text }}</td>
+            </tr>
+        {% endfor %}
+    </table>
+    <form action="{% url 'requ:comment' req.id %}" method="post">
+        {% csrf_token %}
+        <div class="input-field">
+            <input type="text" required name="text" id="text" class="validate">
+            <label for="text">Комментарий</label>
+        </div>
+        <button type="submit" class="waves-effect waves-light btn">
+            <i class="material-icons left">send</i>Отправить
+        </button>
+    </form>
+{% endblock %}

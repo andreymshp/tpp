@@ -1,0 +1,24 @@
+{% extends 'base.html' %}
+
+{% block tittle %}Авторизация{% endblock %}
+
+{% block content %}
+    {% if is_auth %}
+        <p>Вы вошли систему под аккаунтом {{ user }}</p>
+        <a href="{% url "requ:logout" %}">Выйти</a>
+    {% endif %}
+    <form action="{% url 'requ:login' %}" method="POST" class="collection">
+        {% csrf_token %}
+        {% if error == "disabled" %}
+            <p>Ваш аккаунт не активен</p>
+        {% endif %}
+        {% if error == "invalid" %}
+            <p>Неверные данные</p>
+        {% endif %}
+        <input type="text" required placeholder="Логин" name="username" class="collection-item">
+        <input type="password" required placeholder="Пароль" name="password" class="collection-item">
+        <button type="submit" class="waves-effect waves-light btn"><i class="material-icons left">login</i>Войти
+        </button>
+
+    </form>
+{% endblock %}

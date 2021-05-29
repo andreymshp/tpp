@@ -1,0 +1,25 @@
+{% extends 'base.html' %}
+
+{% block tittle %}Заявки{% endblock %}
+
+{% block content %}
+    {% if reqs %}
+        <h3 class="center-align">Последние не решенные заявки</h3>
+        <div class="row">
+            {% for a in reqs %}
+                <div class="col s12 m6">
+                    <div class="card teal darken-4 hoverable">
+                        <div class="card-content white-text">
+                            <span class="card-title">{{ a.pub_date }}</span>
+                            <p class="truncate">{{ a.text }}</p>
+                        </div>
+                        <div class="card-action">
+                            <a href="{% url 'requ:detail' a.id %}">Подробнее</a>
+                        </div>
+                    </div>
+                </div>
+
+            {% endfor %}
+        </div>
+    {% endif %}
+{% endblock %}

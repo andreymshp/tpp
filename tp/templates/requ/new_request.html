@@ -1,0 +1,22 @@
+{% extends 'base.html' %}
+
+{% block tittle %}Авторизация{% endblock %}
+
+{% block content %}
+
+    {% if is_auth %}
+        <h4 class="center-align">Заявка</h4>
+        <form action="{% url 'requ:new_request' %}" method="POST">
+            {% csrf_token %}
+            <div class="input-field">
+                <input type="text" required name="text" id="text" class="validate">
+                <label for="text">Опишите вашу проблему</label>
+            </div>
+            <button type="submit" class="waves-effect waves-light btn">
+                <i class="material-icons left">send</i>Отправить
+            </button>
+        </form>
+    {% else %}
+        <p> Вы не вошли в аккаунт </p>
+    {% endif %}
+{% endblock %}
